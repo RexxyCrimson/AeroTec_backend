@@ -53,29 +53,31 @@
         <h1>Registrate aqui</h1>
         <div class="section">
             <h2>Ingresa tus datos por favor</h2>
+          <form method="post" action="{% url 'signup' %}">
+            {% csrf_token %}
             <div class="input-group flex-nowrap" data-bs-theme="dark">
-                <input type="text" class="form-control" placeholder="Nombre(s)" aria-label="nombre" aria-describedby="addon-wrapping">
+                <input type="text" class="form-control" placeholder="Nombre(s)" aria-label="nombre" aria-describedby="addon-wrapping" name="nombre" required>
             </div>
             <p></p>
             <div class="input-group flex-nowrap" data-bs-theme="dark">
-                <input type="text" class="form-control" placeholder="Apellido Paterno" aria-label="apellidop" aria-describedby="addon-wrapping">
+                <input type="text" class="form-control" placeholder="Apellido Paterno" aria-label="apellidop" aria-describedby="addon-wrapping" name="apellidop" required>
             </div>
             <p></p>
             <div class="input-group flex-nowrap" data-bs-theme="dark">
-                <input type="text" class="form-control" placeholder="Apellido Materno" aria-label="apellidom" aria-describedby="addon-wrapping">
+                <input type="text" class="form-control" placeholder="Apellido Materno" aria-label="apellidom" aria-describedby="addon-wrapping" name="apellidom" required>
             </div>
             <p></p>
             <div class="row">
                 <div class="col">
                   <label for="" style="color: aliceblue;">Fecha de nacimiento</label>
                   <div class="input-group flex-nowrap" data-bs-theme="dark">
-                    <input type="date" class="form-control" placeholder="Fecha de nacimiento" aria-label="date" aria-describedby="addon-wrapping">
+                    <input type="date" class="form-control" placeholder="Fecha de nacimiento" aria-label="date" aria-describedby="addon-wrapping" name="nacimiento" required>
                   </div>
                 </div>
                 <div class="col">
                   <label for=""></label>
                     <div class="input-group mb-3" data-bs-theme="dark">
-                        <select class="form-select" id="inputGroupSelect01">
+                        <select class="form-select" id="inputGroupSelect01" name="genero" required>
                           <option selected>Elige aqui tu genero...</option>
                           <option value="1">Hombre</option>
                           <option value="2">Mujer</option>
@@ -86,18 +88,18 @@
               </div>
               
               <div class="input-group flex-nowrap" data-bs-theme="dark">
-                <input type="text" class="form-control" placeholder="Correo Electronico" aria-label="email" aria-describedby="addon-wrapping">
+                <input type="text" class="form-control" placeholder="Correo Electronico" aria-label="email" aria-describedby="addon-wrapping" name="email" required>
               </div>
               <p></p>
               <div class="row">
                 <div class="col">
-                    <input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock" data-bs-theme="dark" placeholder="Contraseña">
+                    <input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock" data-bs-theme="dark" placeholder="Contraseña" name="pass" required>
                     <div id="passwordHelpBlock" class="form-text" data-bs-theme="dark">
                       Tu contraseña debe tener entre 8 y 20 caracteres, usa letras y numeros, no uses simbolos ni espacios.
                     </div>
                 </div>
                 <div class="col">
-                    <input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock" data-bs-theme="dark" placeholder="Confirma tu contraseña">
+                    <input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock" data-bs-theme="dark" placeholder="Confirma tu contraseña" name="pass1" required>
                     <div id="passwordHelpBlock" class="form-text" data-bs-theme="dark">
                       Debe ser la misma contraseña que ya ingresaste.
                     </div>
@@ -105,8 +107,9 @@
               </div>
               <p></p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-center" data-bs-theme="dark">
-                <button type="button" class="btn btn-outline-secondary btn-lg" style="color: aliceblue;">Registrar</button>
+                <button type="submit" class="btn btn-outline-secondary btn-lg" style="color: aliceblue;">Registrar</button>
             </div>
+          </form>
         </div>
       </div>
     <!-- Bootstrap JS y dependencias de Popper -->
