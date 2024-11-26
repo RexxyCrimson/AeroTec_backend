@@ -21,29 +21,9 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="pagina_puebra.html">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="pagina4.html">Reserva tu Vuelo</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
+                <a class="nav-link active" aria-current="page" href="{% url 'Home' %}">Home</a>
               </li>
             </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-              </svg></button>
-            </form>
           </div>
         </div>
       </nav>
@@ -51,19 +31,31 @@
 
       <div class="container">
         <h1>Inicio de Sesión</h1>
+        <!-- Bloque para mostrar mensajes de error -->
+      {% if messages %}
+        <div class="alert alert-danger" role="alert">
+          {% for message in messages %}
+            {{ message }}
+          {% endfor %}
+        </div>
+      {% endif %}
+
         <div class="section">
+          <form method="post" action="{% url 'signin' %}">
+            {% csrf_token %}
             <div class="input-group flex-nowrap" data-bs-theme="dark">
-                <input type="text" class="form-control" placeholder="Usuario" aria-label="Usuario" aria-describedby="addon-wrapping">
+                <input type="email" class="form-control" placeholder="Correo Electronico" aria-label="Usuario" aria-describedby="addon-wrapping" name="correo" required>
             </div>
             <p></p>
             <div class="input-group flex-nowrap" data-bs-theme="dark">
-                <input type="password" class="form-control" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="addon-wrapping">
+                <input type="password" class="form-control" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="addon-wrapping" name="clave" required>
             </div>
           <div class="input-group flex-nowrap justify-content-md-center" data-bs-theme="dark">
               <p></p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-3" data-bs-theme="dark">
-                <button type="button" class="btn btn-outline-secondary btn-lg" style="color: aliceblue;">Iniciar Sesión</button>
+                <button type="submit" class="btn btn-outline-secondary btn-lg" style="color: aliceblue;">Iniciar Sesión</button>
             </div>
+          </form>
             <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-3" data-bs-theme="dark">
               <button type="button" class="btn btn-outline-secondary btn-lg" onclick="window.location.href='{% url 'signup' %}'" style="color: aliceblue;">¿No tienes cuenta?, Registrate aqui</button>
             </div>

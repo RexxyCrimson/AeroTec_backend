@@ -4,16 +4,28 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib import messages
 from .models import CustomUser
+from django.contrib.auth import authenticate, login
 
 # Crea las vistas aqui
-# Funcion que retorna y renderiza el archivo html signup
-def home(request):
+
+def home(request): # Pagina principal para usuarios externos
     return render(request,'paginaBienvenida.html')
 
-def signin(request):
-    return render(request,'inicioSesion.html')
+def signin(request): # Inicio de sesión
+    if request.method == 'POST':
+        email = request.POST.get('correo')
+        password = request.POST.get('clave')
+        user = authenticate(request, username=email, password=password)  # username se refiere al campo de usuario/email
+        
+        if user is not None:
+            login(request, user)
+            return redirect('/')  # Redirige a la página de inicio o dashboard
+        else:
+            messages.error(request, 'Correo o contraseña incorrectos')
 
-def signup(request):
+    return render(request, 'inicioSesion.html')
+
+def signup(request): # Registro de usuario
     if request.method == 'POST':
         nombre = request.POST.get('nombre')
         apellidop = request.POST.get('apellidop')

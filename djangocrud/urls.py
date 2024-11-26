@@ -21,7 +21,7 @@ from tasks import views
 # Sección para tener control de las vistas de la app web
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name='Menu Home'),
+    path('', views.home, name='Home'),
     path('signin/', views.signin, name='signin'),
     path('signup/', views.signup, name='signup'),
 ]
