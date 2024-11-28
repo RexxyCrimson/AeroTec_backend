@@ -19,7 +19,7 @@ def signin(request): # Inicio de sesión
         
         if user is not None:
             login(request, user)
-            return redirect('/')  # Redirige a la página de inicio o dashboard
+            return redirect('/menu')  # Redirige a la página de inicio del usuario
         else:
             messages.error(request, 'Correo o contraseña incorrectos')
 
@@ -48,11 +48,27 @@ def signup(request): # Registro de usuario
         user = CustomUser.objects.create_user(
             first_name=nombre,
             last_name=apellidop,
+            middle_name=apellidom,
             date_of_birth=nacimiento,
             gender=genero, email=email,
             password=password
         )
         user.save()
         messages.success(request,"Registro exitoso!!")
-        return redirect('Menu Home')
+        return redirect('/signin')
     return render(request,'registrarse.html') # Renderisa el archivo html de registrar
+
+def menu(request): # Menu principal una vez iniciado sesión
+    return render(request, 'inicioUser.html')
+
+def vuelos_disponibles(request): # Vista para ver la tabla de vuelos disponibles
+    return render(request, 'vuelos_disponibles.html')
+
+def reserva(request): # Vista para reservar un vuelo
+    return render(request, 'reservaVuelo.html')
+
+def pago(request): # Vista para agregar el metodo de pago
+    return render(request, 'pago.html')
+
+def consultar(request): # Vista para consultar el vuelo agendado FALTA
+    return render(request, 'consultarVuelo.html')
