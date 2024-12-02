@@ -30,23 +30,15 @@
 
 
       <div class="container">
-        <h1>Reservar tu vuelo</h1>
+        <h1>Consulta tus vuelos</h1>
+        <!-- Bloque para mostrar mensajes de error -->    
 
         <div class="section">
-          <form method="POST" action="{% url 'reserva' %}">
+          <form method="POST" action="{% url 'consultar' %}">
             {% csrf_token %}
-            <div class="input-group mb-3" data-bs-theme="dark">
-                <select class="form-select" id="vueloSeleccionado" name="vuelo_selected" required>
-                  <option value="" disable selected>Elige el vuelo...</option>
-                  {% for vuelo in vuelos %}
-                  <option value="{{ vuelo.id }}">{{ vuelo.numero_vuelo }} - {{ vuelo.origen }} a {{ vuelo.destino }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-            <p style="color:#ffff">Vuelos disponibles</p>
-            
+
             {# Tabla para visualizar el vuelo elegido para Agendar #}
-            <table class="table table-dark" id="detallesVuelo">
+            <table class="table table-dark table-striped">
               <thead>
                 <tr>
                   <th scope="col">Numero de vuelo</th>
@@ -60,33 +52,33 @@
                   <th scope="col">Precio</th>
                   <th scope="col">Asientos disponibles</th>
                   <th scope="col">Asientos totales</th>
+                  <th scope="col">Fecha de agendo</th>
                 </tr>
               </thead>
               <tbody>
-                {% for vuelo in vuelos %}
+                {% for vuelo in vuelos_agendados %}
+                    <tr>
+                        <th scope="row">{{ vuelo.numero_vuelo }}</th>
+                        <td>{{ vuelo.aerolinea }}</td>
+                        <td>{{ vuelo.modelo_avion }}</td>
+                        <td>{{ vuelo.origen }}</td>
+                        <td>{{ vuelo.destino }}</td>
+                        <td>{{ vuelo.tiempo_salida }}</td>
+                        <td>{{ vuelo.tiempo_llegada }}</td>
+                        <td>{{ vuelo.duracion }}</td>
+                        <td>{{ vuelo.precio }}</td>
+                        <td>{{ vuelo.asientos_disponibles }}</td>
+                        <td>{{ vuelo.asientos_totales }}</td>
+                        <td>{{ vuelo.fecha_agendado }}</td>
+                    </tr>
+                {% empty %}
                 <tr>
-                  <th scope="row">{{ vuelo.numero_vuelo }}</th>
-                  <td>{{ vuelo.aerolinea }}</td>
-                  <td>{{ vuelo.modelo_avion }}</td>
-                  <td>{{ vuelo.origen }}</td>
-                  <td>{{ vuelo.destino }}</td>
-                  <td>{{ vuelo.tiempo_salida }}</td>
-                  <td>{{ vuelo.tiempo_llegada }}</td>
-                  <td>{{ vuelo.duracion }}</td>
-                  <td>{{ vuelo.precio }}</td>
-                  <td>{{ vuelo.asientos_disponibles }}</td>
-                  <td>{{ vuelo.asientos_totales }}</td>
+                    <td colspan="12">No hay vuelos disponibles para el día de hoy.</td>
                 </tr>
                 {% endfor %}
               </tbody>
             </table>
             <p></p>
-
-          <div class="input-group flex-nowrap justify-content-md-center" data-bs-theme="dark">
-              <p></p>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-3" data-bs-theme="dark">
-                <button type="submit" class="btn btn-outline-secondary btn-lg" style="color: aliceblue;">Agendar</button>
-            </div>
           </form>
           </div>
         </div>

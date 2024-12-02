@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from djangocrud import settings
 
 # Clase para el modelo de tabla para crear usuarios
 class CustomUserManager(BaseUserManager):
@@ -73,3 +74,44 @@ class Vuelos(models.Model):
     asientos_totales = models.PositiveIntegerField(verbose_name="Asientos Totales")
     def __str__(self):
         return f"{self.numero_vuelo} ({self.origen} -> {self.destino})"
+    
+# Clase para modelo de tabla para guardar los datos del metodo de pago
+class Tarjeta(models.Model):
+    numero_tarjeta = models.CharField(
+        max_length=16, 
+        unique=True, 
+        verbose_name="Número de Tarjeta"
+    )
+    vigencia = models.CharField(
+        max_length=5, 
+        verbose_name="Vigencia (MM/AA)"
+    )
+    cvv = models.CharField(
+        max_length=3, 
+        verbose_name="CVV"
+    )
+
+    def __str__(self):
+        return f"Tarjeta {self.numero_tarjeta[-4:]}"  # Muestra solo los últimos 4 dígitos
+    
+
+# Vuelo agendado recientemente
+class VuelosAgendados(models.Model):
+
+    # Copia de los datos del vuelo
+    numero_vuelo = models.CharField(max_length=10, verbose_name="Número de Vuelo")
+    aerolinea = models.CharField(max_length=50, verbose_name="Aerolínea")
+    modelo_avion = models.CharField(max_length=50, verbose_name="Modelo del Avión")
+    origen = models.CharField(max_length=100, verbose_name="Origen")
+    destino = models.CharField(max_length=100, verbose_name="Destino")
+    tiempo_salida = models.DateTimeField(verbose_name="Fecha y Hora de Salida")
+    tiempo_llegada = models.DateTimeField(verbose_name="Fecha y Hora de Llegada")
+    duracion = models.DurationField(verbose_name="Duración Estimada")
+    precio = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio por Asiento")
+    asientos_disponibles = models.PositiveIntegerField(verbose_name="Asientos Disponibles")
+    asientos_totales = models.PositiveIntegerField(verbose_name="Asientos Totales")
+
+    fecha_agendado = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de Agendado")
+
+    def __str__(self):
+        return f"{self.numero_vuelo}"

@@ -1,17 +1,21 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib import messages
-from .models import CustomUser
+from .models import CustomUser, VuelosAgendados, Vuelos, Tarjeta
 from django.contrib.auth import authenticate, login
+from django.core.serializers import serialize
+
 
 # Crea las vistas aqui
 
-def home(request): # Pagina principal para usuarios externos
+# Pagina principal para usuarios externos
+def home(request):
     return render(request,'paginaBienvenida.html')
 
-def signin(request): # Inicio de sesión
+# Inicio de sesión
+def signin(request):
     if request.method == 'POST':
         email = request.POST.get('correo')
         password = request.POST.get('clave')
@@ -25,7 +29,8 @@ def signin(request): # Inicio de sesión
 
     return render(request, 'inicioSesion.html')
 
-def signup(request): # Registro de usuario
+# Registro de usuario
+def signup(request):
     if request.method == 'POST':
         nombre = request.POST.get('nombre')
         apellidop = request.POST.get('apellidop')
@@ -58,17 +63,72 @@ def signup(request): # Registro de usuario
         return redirect('/signin')
     return render(request,'registrarse.html') # Renderisa el archivo html de registrar
 
-def menu(request): # Menu principal una vez iniciado sesión
+# Menu principal una vez iniciado sesión
+def menu(request):
     return render(request, 'inicioUser.html')
 
-def vuelos_disponibles(request): # Vista para ver la tabla de vuelos disponibles
-    return render(request, 'vuelos_disponibles.html')
 
-def reserva(request): # Vista para reservar un vuelo
-    return render(request, 'reservaVuelo.html')
+# Vista para reservar un vuelo
+def reserva(request):
+    # Obtener todos los registros de vuelos disponibles
+    vuelos = Vuelos.objects.all()
+    vuelo_selected = None
 
-def pago(request): # Vista para agregar el metodo de pago
-    return render(request, 'pago.html')
+    # Verificar si se seleccionó un vuelo
+    if request.method == 'POST':
+        vuelo_id = request.POST.get('vuelo_selected')
+        
+        if vuelo_id:
+            vuelo_selected = Vuelos.objects.get(id=vuelo_id)
+            
+            # Crear el vuelo agendado (insertarlo en la tabla VuelosAgendados)
+            VuelosAgendados.objects.create(
+                numero_vuelo=vuelo_selected.numero_vuelo,
+                aerolinea=vuelo_selected.aerolinea,
+                modelo_avion=vuelo_selected.modelo_avion,
+                origen=vuelo_selected.origen,
+                destino=vuelo_selected.destino,
+                tiempo_salida=vuelo_selected.tiempo_salida,
+                tiempo_llegada=vuelo_selected.tiempo_llegada,
+                duracion=vuelo_selected.duracion,
+                precio=vuelo_selected.precio,
+                asientos_disponibles=vuelo_selected.asientos_disponibles,
+                asientos_totales=vuelo_selected.asientos_totales
+            )
 
-def consultar(request): # Vista para consultar el vuelo agendado FALTA
-    return render(request, 'consultarVuelo.html')
+            # Redirigir al usuario a una página de confirmación o de agradecimiento
+            return redirect('/consultar')  # Cambia 'pago' por la URL que deseas redirigir
+
+    return render(request, 'reservaVuelo.html', {
+        'vuelos': vuelos,
+        'vuelo_selected': vuelo_selected
+    })
+
+
+# Vista para agregar el metodo de pago
+def pago(request):
+    if request.method == 'POST':
+        # Obtener datos del formulario
+        numero_tarjeta = request.POST.get('numero_tarjeta')
+        vigencia = request.POST.get('vigencia')
+        cvv = request.POST.get('cvv')
+
+        # Validar datos (opcional)
+        if len(numero_tarjeta) != 16 or len(cvv) != 3:
+            return HttpResponse("Error: Datos inválidos. Por favor verifica e intenta nuevamente.")
+
+        # Guardar en la base de datos
+        Tarjeta.objects.create(
+            numero_tarjeta=numero_tarjeta,
+            vigencia=vigencia,
+            cvv=cvv
+        )
+
+        return HttpResponse("¡Tarjeta guardada exitosamente!")
+    else:
+        return render(request, 'pago.html')
+
+# Vista para consultar el vuelos agendados
+def consultar(request):
+    vuelos_agendados = VuelosAgendados.objects.all()
+    return render(request, 'consultarVuelo.html', {'vuelos_agendados': vuelos_agendados})

@@ -21,7 +21,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'Home' %}">Home</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'menu' %}">Home</a>
               </li>
             </ul>
           </div>
@@ -41,10 +41,10 @@
       {% endif %}
 
         <div class="section">
-          <form method="post" action="{% url 'signin' %}">
+          <form method="POST" action="{% url 'pago' %}">
             {% csrf_token %}
             <div class="input-group flex-nowrap" data-bs-theme="dark">
-                <input type="text" class="form-control" placeholder="Numero de Tarjeta" aria-label="Ingresa tu número de tarjeta aqui..." aria-describedby="addon-wrapping" name="num_tarjeta" required>
+                <input type="text" class="form-control" placeholder="Numero de Tarjeta" aria-label="Ingresa tu número de tarjeta aqui..." aria-describedby="addon-wrapping" name="numero_tarjeta" required>
             </div>
             <p></p>
             <div class="input-group flex-nowrap" data-bs-theme="dark">
