@@ -76,12 +76,12 @@ WSGI_APPLICATION = 'djangocrud.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'aerotecbd1',
-        'USER': 'batman',
-        'PASSWORD': 'qwe123',
+        'USER': 'root',
+        'PASSWORD': 'test',
         'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'PORT': '3306',
     }
 }
 
