@@ -1,3 +1,5 @@
+import dj_database_url
+import os
 """
 Django settings for djangocrud project.
 
@@ -75,14 +77,11 @@ WSGI_APPLICATION = 'djangocrud.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'aerotecbd1',
-        'USER': 'batman',
-        'PASSWORD': 'qwe123',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 
 
@@ -127,3 +126,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'tasks.CustomUser'
+PORT = os.environ.get('PORT', '8000')
