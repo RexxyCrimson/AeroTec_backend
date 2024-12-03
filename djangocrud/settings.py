@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-u$!c0vya&8scf%mwj3xf#gg&b1o=zv#7n%lbuqt2i5$awwo_!p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://aerotec-project.onrender.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['aerotec-project.onrender.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
