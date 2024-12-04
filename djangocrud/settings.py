@@ -77,11 +77,14 @@ WSGI_APPLICATION = 'djangocrud.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://<batman>:<5so8umQCyQo1x44Wh0F7mhMnsioWcSTZ>@<dpg-ct7ha2t2ng1s73cfg9n0-a>:<5432>/<aerotecbd1>',
-        conn_max_age=600,
-        ssl_require=True
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'aerotecbd1',
+        'USER': 'batman',
+        'PASSWORD': 'qwe123',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
 }
 
 
