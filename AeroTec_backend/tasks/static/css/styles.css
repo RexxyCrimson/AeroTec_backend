@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Global Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    background-image: url('/static/images/plane.jpg'); /* Ruta de tu imagen */
+    background-repeat: no-repeat; /* Evitar que la imagen se repita */
+    background-size: cover; /* Escalar la imagen para cubrir todo el fondo */
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+/* Title and headings */
+h1, h2 {
+    color: white;
+    font-weight: 300;
+    text-align: center;
+}
+.container {
+    font-family: 'Poppins', sans-serif;
+    max-width: 1200px;
+    margin: 50px auto;
+    background-color: rgba(0, 0, 0, 0.6); /* Color con transparencia (ajuste al valor rgba) */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2px); /* Aplicar desenfoque */
+}
+/* Section Styles */
+.section {
+    margin-bottom: 30px;
+}
