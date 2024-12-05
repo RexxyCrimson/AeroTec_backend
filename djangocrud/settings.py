@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-u$!c0vya&8scf%mwj3xf#gg&b1o=zv#7n%lbuqt2i5$awwo_!p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -85,11 +85,11 @@ import os
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'aerotecbd1',          # Nombre de la base de datos
-        'USER': 'batman',              # Usuario de PostgreSQL
-        'PASSWORD': 'qwe123',          # Contraseña del usuario
-        'HOST': 'db',                  # Nombre del servicio (definido en docker-compose)
-        'PORT': '5432',                # Puerto de PostgreSQL
+        'NAME': 'aerotecbd1',
+        'USER': 'batman',
+        'PASSWORD': 'qwe123',
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 
